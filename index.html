@@ -1,0 +1,890 @@
+<title>Camper Mallorca</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap">
+
+<style>
+/* ─── Tokens ─── */
+:root {
+  --deep: #0D3B54;
+  --accent: #3A9CB0;
+  --accent-hover: #2D7F90;
+  --warm: #C0442E;
+  --sand: #F0E8DC;
+  --bg: #FAFAF7;
+  --surface: #FFFFFF;
+  --text: #2A3836;
+  --text-soft: #6B7D7A;
+  --text-inv: #F0E8DC;
+  --nav-bg: rgba(250, 250, 247, 0.88);
+  --border: rgba(13, 59, 84, 0.08);
+  --shadow: rgba(13, 59, 84, 0.06);
+  --hero-overlay: rgba(10, 36, 52, 0.48);
+  --gallery-bg: #F0E8DC;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --deep: #A8CCDD;
+    --accent: #5DC0D6;
+    --accent-hover: #7AD2E4;
+    --warm: #E07B5F;
+    --sand: #1A2530;
+    --bg: #111B24;
+    --surface: #182430;
+    --text: #D4CEC6;
+    --text-soft: #7E9492;
+    --text-inv: #D4CEC6;
+    --nav-bg: rgba(17, 27, 36, 0.9);
+    --border: rgba(168, 204, 221, 0.08);
+    --shadow: rgba(0, 0, 0, 0.2);
+    --hero-overlay: rgba(6, 18, 28, 0.55);
+    --gallery-bg: #1A2530;
+  }
+}
+:root[data-theme="dark"] {
+  --deep: #A8CCDD;
+  --accent: #5DC0D6;
+  --accent-hover: #7AD2E4;
+  --warm: #E07B5F;
+  --sand: #1A2530;
+  --bg: #111B24;
+  --surface: #182430;
+  --text: #D4CEC6;
+  --text-soft: #7E9492;
+  --text-inv: #D4CEC6;
+  --nav-bg: rgba(17, 27, 36, 0.9);
+  --border: rgba(168, 204, 221, 0.08);
+  --shadow: rgba(0, 0, 0, 0.2);
+  --hero-overlay: rgba(6, 18, 28, 0.55);
+  --gallery-bg: #1A2530;
+}
+
+/* ─── Base ─── */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Work Sans', system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: 'Cormorant Garamond', 'Georgia', serif;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--deep);
+  text-wrap: balance;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); }
+
+.container {
+  max-width: 1080px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+/* ─── Nav ─── */
+.nav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 100;
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow 0.3s;
+}
+.nav.scrolled { box-shadow: 0 2px 20px var(--shadow); }
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 14px;
+  max-width: 1080px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+.nav__logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: var(--deep);
+  letter-spacing: -0.01em;
+}
+.nav__logo svg {
+  width: 22px; height: 22px;
+  vertical-align: -3px;
+  margin-right: 6px;
+  fill: var(--accent);
+}
+
+.nav__right {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav__links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+  margin: 0; padding: 0;
+}
+.nav__links a {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-soft);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav__links a:hover { color: var(--deep); }
+
+.lang-btn {
+  background: var(--border);
+  border: none;
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-soft);
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  transition: background 0.2s, color 0.2s;
+}
+.lang-btn:hover { background: var(--accent); color: var(--surface); }
+
+.theme-btn {
+  background: var(--border);
+  border: none;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.theme-btn:hover { background: var(--accent); }
+.theme-btn:hover svg { stroke: var(--surface); }
+.theme-btn svg {
+  width: 16px; height: 16px;
+  stroke: var(--text-soft);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 0.2s;
+}
+.theme-icon--moon { display: none; }
+:root[data-theme="dark"] .theme-icon--sun { display: none; }
+:root[data-theme="dark"] .theme-icon--moon { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-icon--sun { display: none; }
+  :root:not([data-theme="light"]) .theme-icon--moon { display: block; }
+}
+
+.nav__burger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.nav__burger svg {
+  width: 24px; height: 24px;
+  stroke: var(--text);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+@media (max-width: 720px) {
+  .nav__links { display: none; }
+  .nav__burger { display: block; }
+  .nav__links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0; right: 0;
+    background: var(--nav-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 16px 20px 24px;
+    border-bottom: 1px solid var(--border);
+    gap: 16px;
+  }
+}
+
+/* ─── Hero ─── */
+.hero {
+  position: relative;
+  min-height: min(65vh, 560px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  background: var(--deep);
+}
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  background: url('img/hero.jpg') center/cover no-repeat;
+}
+.hero__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--hero-overlay);
+}
+.hero__content {
+  position: relative;
+  z-index: 1;
+  padding: 48px 24px;
+  max-width: 680px;
+}
+.hero__title {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  color: #F0E8DC;
+  margin: 0 0 16px;
+  font-weight: 600;
+}
+.hero__sub {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: rgba(240, 232, 220, 0.85);
+  margin: 0 0 32px;
+  font-weight: 300;
+  line-height: 1.7;
+}
+.hero__cta {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  padding: 14px 36px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  transition: background 0.25s, transform 0.2s;
+}
+.hero__cta:hover {
+  background: var(--accent-hover);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* ─── Sections ─── */
+.section {
+  padding-block: 72px;
+}
+.section--sand { background: var(--sand); }
+.section--deep {
+  background: var(--deep);
+  color: var(--text-inv);
+}
+.section--deep h2 { color: #F0E8DC; }
+.section--deep .text-soft { color: rgba(240, 232, 220, 0.7); }
+
+.section__title {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  margin: 0 0 12px;
+}
+.section__subtitle {
+  color: var(--text-soft);
+  font-size: 1rem;
+  margin: 0 0 40px;
+  max-width: 560px;
+}
+.section__subtitle.centered {
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* ─── About ─── */
+.about__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+.about__text {
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+.about__text p { margin: 0 0 16px; }
+.about__img {
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+}
+.about__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 720px) {
+  .about__grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .about__grid .about__img { order: -1; }
+}
+
+/* ─── Gallery ─── */
+.gallery__strip {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-block: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+  margin-inline: -20px;
+  padding-inline: 20px;
+}
+.gallery__strip::-webkit-scrollbar { height: 6px; }
+.gallery__strip::-webkit-scrollbar-track { background: transparent; }
+.gallery__strip::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+.gallery__item {
+  flex: 0 0 min(78vw, 380px);
+  scroll-snap-align: start;
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  cursor: pointer;
+  position: relative;
+}
+.gallery__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.gallery__item:hover img { transform: scale(1.04); }
+
+/* ─── Lightbox ─── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0,0,0,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.lightbox.active { opacity: 1; pointer-events: all; }
+.lightbox img {
+  max-width: 92vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: 4px;
+}
+.lightbox__close {
+  position: absolute;
+  top: 16px; right: 20px;
+  background: none; border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 8px;
+  line-height: 1;
+}
+.lightbox__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: #fff;
+  font-size: 1.6rem;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+.lightbox__nav:hover { background: rgba(255,255,255,0.25); }
+.lightbox__nav--prev { left: 16px; }
+.lightbox__nav--next { right: 16px; }
+
+/* ─── Features ─── */
+.features__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 20px;
+}
+.feature-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px;
+  background: var(--surface);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.feature-card__icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sand);
+  border-radius: 8px;
+}
+.feature-card__icon svg {
+  width: 20px; height: 20px;
+  stroke: var(--accent);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.feature-card__text {
+  font-size: 0.9rem;
+  font-weight: 450;
+  line-height: 1.4;
+}
+
+/* ─── Contact ─── */
+.contact__inner {
+  text-align: center;
+  max-width: 520px;
+  margin-inline: auto;
+}
+.contact__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 32px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: 6px;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: background 0.25s, transform 0.2s;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+}
+.btn--primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn--primary:hover {
+  background: var(--accent-hover);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.btn--outline {
+  background: transparent;
+  color: #F0E8DC;
+  border: 1.5px solid rgba(240, 232, 220, 0.4);
+}
+.btn--outline:hover {
+  background: rgba(240, 232, 220, 0.1);
+  color: #F0E8DC;
+}
+.btn svg {
+  width: 18px; height: 18px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+/* ─── Footer ─── */
+.footer {
+  border-top: 1px solid var(--border);
+  padding-block: 32px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-soft);
+}
+.footer__compass {
+  display: inline-block;
+  margin-bottom: 10px;
+  opacity: 0.3;
+}
+.footer__compass svg {
+  width: 28px; height: 28px;
+  fill: var(--text-soft);
+}
+
+/* ─── Scroll Animations ─── */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Small screens ─── */
+@media (max-width: 480px) {
+  .section { padding-block: 52px; }
+  .gallery__item { flex: 0 0 85vw; }
+.features__grid { grid-template-columns: 1fr 1fr; }
+  .hero { min-height: min(55vh, 440px); }
+}
+</style>
+
+<!-- ─── Navigation ─── -->
+<nav class="nav" id="nav">
+  <div class="nav__inner">
+    <div class="nav__logo">
+      <svg viewBox="0 0 24 24"><path d="M12 2L13.5 10.5L22 12L13.5 13.5L12 22L10.5 13.5L2 12L10.5 10.5Z"/><path d="M12 5L12.6 9.4L12 7L11.4 9.4Z M19 12L14.6 12.6L17 12L14.6 11.4Z M12 19L11.4 14.6L12 17L12.6 14.6Z M5 12L9.4 11.4L7 12L9.4 12.6Z" opacity="0.4"/></svg>
+      Camper Mallorca
+    </div>
+    <div class="nav__right">
+      <ul class="nav__links" id="navLinks">
+        <li><a href="#about" data-i18n="nav.van">The Van</a></li>
+        <li><a href="#gallery" data-i18n="nav.gallery">Gallery</a></li>
+        <li><a href="#features" data-i18n="nav.features">Equipment</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+      <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle dark mode">
+        <svg class="theme-icon--sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="theme-icon--moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+      <button class="lang-btn" id="langBtn" onclick="toggleLang()" aria-label="Switch language">ES</button>
+      <button class="nav__burger" id="burger" onclick="toggleMenu()" aria-label="Menu">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── Hero ─── -->
+<section class="hero">
+  <div class="hero__bg" role="img" aria-label="VW T5 Camper at sunset by the Mediterranean sea"></div>
+  <div class="hero__content">
+    <h1 class="hero__title" data-i18n="hero.title">Explore Mallorca at your own pace</h1>
+    <p class="hero__sub" data-i18n="hero.sub">A hand-built VW T5 campervan with everything you need. Park by the sea, cook under the stars, wake up to the sound of waves.</p>
+    <a href="https://www.yescapa.es" target="_blank" rel="noopener" class="hero__cta" data-i18n="hero.cta">Book Now</a>
+  </div>
+</section>
+
+<!-- ─── About ─── -->
+<section class="section" id="about">
+  <div class="container reveal">
+    <h2 class="section__title" data-i18n="about.title">More than a van — a way to travel</h2>
+    <div class="about__grid">
+      <div class="about__text">
+        <p data-i18n="about.p1">This VW Transporter T5 has been lovingly converted into a cozy campervan with a full wood interior, a complete kitchen, and a comfortable double bed. Based in Mallorca, it's the perfect way for couples to discover the island's hidden coves, winding mountain roads, and golden sunsets — at their own rhythm.</p>
+        <p data-i18n="about.p2">Everything is thought out so you can focus on what matters: the experience. From the warm wood paneling and ambient LED lighting to the outdoor shower and fully-stocked kitchen, this is your home on wheels.</p>
+      </div>
+      <div class="about__img">
+        <img src="img/interior-bed-sea.jpg" alt="Waking up to the Mediterranean from inside the camper" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Gallery ─── -->
+<section class="section section--sand" id="gallery">
+  <div class="container reveal">
+    <h2 class="section__title" data-i18n="gallery.title">See for yourself</h2>
+    <p class="section__subtitle" data-i18n="gallery.sub">Swipe through to explore the van inside and out.</p>
+  </div>
+  <div class="container">
+    <div class="gallery__strip" id="galleryStrip">
+      <div class="gallery__item" onclick="openLightbox(0)"><img src="img/hero.jpg" alt="VW T5 Camper at sunset" loading="lazy"></div>
+      <div class="gallery__item" onclick="openLightbox(1)"><img src="img/exterior-side.jpg" alt="Side view with compass rose and sea" loading="lazy"></div>
+      <div class="gallery__item" onclick="openLightbox(2)"><img src="img/exterior-front.jpg" alt="Front view on coastal road" loading="lazy"></div>
+      <div class="gallery__item" onclick="openLightbox(3)"><img src="img/interior-home.jpg" alt="Interior — sofa, kitchen and wood paneling" loading="lazy"></div>
+      <div class="gallery__item" onclick="openLightbox(4)"><img src="img/kitchen-food.jpg" alt="Kitchen with mountain view" loading="lazy"></div>
+      <div class="gallery__item" onclick="openLightbox(5)"><img src="img/kitchen-view.jpg" alt="Preparing food with a view" loading="lazy"></div>
+      <div class="gallery__item" onclick="openLightbox(6)"><img src="img/interior-bed-sea.jpg" alt="Bed with sea view" loading="lazy"></div>
+      <div class="gallery__item" onclick="openLightbox(7)"><img src="img/bed-night.jpg" alt="Cozy bed with fairy lights at night" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox__close" onclick="closeLightbox()" aria-label="Close">&times;</button>
+  <button class="lightbox__nav lightbox__nav--prev" onclick="navLightbox(-1, event)" aria-label="Previous">&#8249;</button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="lightbox__nav lightbox__nav--next" onclick="navLightbox(1, event)" aria-label="Next">&#8250;</button>
+</div>
+
+<!-- ─── Features ─── -->
+<section class="section" id="features">
+  <div class="container reveal">
+    <h2 class="section__title" data-i18n="feat.title">Everything you need on board</h2>
+    <p class="section__subtitle" data-i18n="feat.sub">Fully equipped for two. Just bring your sense of adventure.</p>
+    <div class="features__grid">
+
+      <div class="feature-card">
+        <div class="feature-card__icon"><svg viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="12" rx="2"/><path d="M6 8V6a2 2 0 012-2h8a2 2 0 012 2v2"/><line x1="2" y1="14" x2="22" y2="14"/></svg></div>
+        <div class="feature-card__text" data-i18n="feat.bed">Double bed 180×120 cm with convertible sofa</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M12 19V5"/><path d="M5 12l-2 7h18l-2-7"/><circle cx="9" cy="5" r="1.5"/><circle cx="15" cy="5" r="1.5"/></svg></div>
+        <div class="feature-card__text" data-i18n="feat.kitchen">Full kitchen — gas stove, sink &amp; fridge</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
+        <div class="feature-card__text" data-i18n="feat.shower">Outdoor shower</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg></div>
+        <div class="feature-card__text" data-i18n="feat.usb">USB charging ports throughout</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2v1"/><path d="M12 7a4 4 0 014 4c0 1.5-.8 2.8-2 3.4V16H10v-1.6A4 4 0 0112 7z"/></svg></div>
+        <div class="feature-card__text" data-i18n="feat.led">LED ambient lighting — two moods</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="1"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="9"/><line x1="15" y1="3" x2="15" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg></div>
+        <div class="feature-card__text" data-i18n="feat.mosquito">Window mosquito nets</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M5 8h14l-1 10H6z"/><path d="M8 8V5a4 4 0 018 0v3"/></svg></div>
+        <div class="feature-card__text" data-i18n="feat.outdoor">Outdoor table &amp; chairs</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M17 8C17 5.24 14.76 3 12 3S7 5.24 7 8c0 3.53 5 9 5 9s5-5.47 5-9z"/><circle cx="12" cy="8" r="2"/><path d="M7 19h10"/><path d="M9 22h6"/></svg></div>
+        <div class="feature-card__text" data-i18n="feat.cookware">Complete cookware &amp; tableware for 2</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M12 11a2 2 0 100 4 2 2 0 000-4z"/></svg></div>
+        <div class="feature-card__text" data-i18n="feat.insulation">Dual thermal insulation</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon"><svg viewBox="0 0 24 24"><rect x="1" y="6" width="22" height="12" rx="2"/><line x1="23" y1="10" x2="23" y2="14"/><path d="M6 10v4"/><path d="M10 10v4"/><path d="M14 10v4"/></svg></div>
+        <div class="feature-card__text" data-i18n="feat.battery">Second 12V battery (alternator-charged)</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── Contact ─── -->
+<section class="section section--deep" id="contact">
+  <div class="container reveal">
+    <div class="contact__inner">
+      <h2 class="section__title" data-i18n="contact.title">Ready to hit the road?</h2>
+      <p class="text-soft" style="font-size:1.05rem; margin: 8px 0 0;" data-i18n="contact.sub">Book through Yescapa or send us an email with your dates.</p>
+      <div class="contact__buttons">
+        <a href="https://www.yescapa.es" target="_blank" rel="noopener" class="btn btn--primary" data-i18n="contact.yescapa">
+          Book on Yescapa
+        </a>
+        <a href="mailto:paupalou.laika@gmail.com" class="btn btn--outline">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span data-i18n="contact.email">Send Email</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Footer ─── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__compass">
+      <svg viewBox="0 0 24 24"><path d="M12 2L13.5 10.5L22 12L13.5 13.5L12 22L10.5 13.5L2 12L10.5 10.5Z"/></svg>
+    </div>
+    <div>Camper Mallorca · Marratxí, Mallorca</div>
+  </div>
+</footer>
+
+<script>
+/* ─── i18n ─── */
+const T = {
+  en: {
+    'nav.van': 'The Van', 'nav.gallery': 'Gallery', 'nav.features': 'Equipment',
+    'nav.contact': 'Contact',
+    'hero.title': 'Explore Mallorca at your own pace',
+    'hero.sub': 'A hand-built VW T5 campervan with everything you need. Park by the sea, cook under the stars, wake up to the sound of waves.',
+    'hero.cta': 'Book Now',
+    'about.title': 'More than a van — a way to travel',
+    'about.p1': 'This VW Transporter T5 has been lovingly converted into a cozy campervan with a full wood interior, a complete kitchen, and a comfortable double bed. Based in Mallorca, it\'s the perfect way for couples to discover the island\'s hidden coves, winding mountain roads, and golden sunsets — at their own rhythm.',
+    'about.p2': 'Everything is thought out so you can focus on what matters: the experience. From the warm wood paneling and ambient LED lighting to the outdoor shower and fully-stocked kitchen, this is your home on wheels.',
+    'gallery.title': 'See for yourself', 'gallery.sub': 'Swipe through to explore the van inside and out.',
+    'feat.title': 'Everything you need on board', 'feat.sub': 'Fully equipped for two. Just bring your sense of adventure.',
+    'feat.bed': 'Double bed 180×120 cm with convertible sofa',
+    'feat.kitchen': 'Full kitchen — gas stove, sink & fridge',
+    'feat.shower': 'Outdoor shower',
+    'feat.usb': 'USB charging ports throughout',
+    'feat.led': 'LED ambient lighting — two moods',
+    'feat.mosquito': 'Window mosquito nets',
+    'feat.outdoor': 'Outdoor table & chairs',
+    'feat.cookware': 'Complete cookware & tableware for 2',
+    'feat.insulation': 'Dual thermal insulation',
+    'feat.battery': 'Second 12V battery (alternator-charged)',
+    'contact.title': 'Ready to hit the road?',
+    'contact.sub': 'Book through Yescapa or send us an email with your dates.',
+    'contact.yescapa': 'Book on Yescapa',
+    'contact.email': 'Send Email',
+  },
+  es: {
+    'nav.van': 'La Furgo', 'nav.gallery': 'Galería', 'nav.features': 'Equipamiento',
+    'nav.contact': 'Contacto',
+    'hero.title': 'Explora Mallorca a tu aire',
+    'hero.sub': 'Una VW T5 camperizada con todo lo que necesitas. Aparca frente al mar, cocina bajo las estrellas, despierta con el sonido de las olas.',
+    'hero.cta': 'Reservar',
+    'about.title': 'Más que una furgo — una forma de viajar',
+    'about.p1': 'Esta VW Transporter T5 ha sido transformada en una acogedora camper con interior de madera, cocina completa y una cómoda cama doble. Con base en Mallorca, es perfecta para parejas que quieran descubrir las calas escondidas, las carreteras de montaña y los atardeceres dorados de la isla — a su propio ritmo.',
+    'about.p2': 'Todo está pensado para que te centres en lo que importa: la experiencia. Desde el revestimiento de madera y la iluminación LED hasta la ducha exterior y la cocina equipada, esta es tu casa sobre ruedas.',
+    'gallery.title': 'Compruébalo tú mismo', 'gallery.sub': 'Desliza para explorar la furgo por dentro y por fuera.',
+    'feat.title': 'Todo lo que necesitas a bordo', 'feat.sub': 'Equipada para dos. Solo trae tus ganas de aventura.',
+    'feat.bed': 'Cama doble 180×120 cm con sofá convertible',
+    'feat.kitchen': 'Cocina completa — fogón de gas, fregadero y nevera',
+    'feat.shower': 'Ducha exterior',
+    'feat.usb': 'Puertos USB de carga',
+    'feat.led': 'Iluminación LED ambiental — dos ambientes',
+    'feat.mosquito': 'Mosquiteras en ventanas laterales',
+    'feat.outdoor': 'Mesa y sillas de exterior',
+    'feat.cookware': 'Vajilla y batería de cocina para 2',
+    'feat.insulation': 'Doble aislamiento térmico',
+    'feat.battery': 'Segunda batería 12V (carga por alternador)',
+    'contact.title': '¿Listo para salir a la carretera?',
+    'contact.sub': 'Reserva a través de Yescapa o escríbenos un email con tus fechas.',
+    'contact.yescapa': 'Reservar en Yescapa',
+    'contact.email': 'Enviar Email',
+  }
+};
+
+let lang = 'en';
+try { const s = localStorage.getItem('camper-lang'); if (s === 'es') lang = 'es'; } catch(e) {}
+
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (T[l]?.[k]) el.textContent = T[l][k];
+  });
+  document.getElementById('langBtn').textContent = l === 'en' ? 'ES' : 'EN';
+  try { localStorage.setItem('camper-lang', l); } catch(e) {}
+}
+
+function toggleLang() {
+  setLang(lang === 'en' ? 'es' : 'en');
+}
+
+setLang(lang);
+
+/* ─── Dark mode toggle ─── */
+let theme = 'light';
+try { const s = localStorage.getItem('camper-theme'); if (s === 'dark') theme = 'dark'; } catch(e) {}
+if (theme === 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  // System is dark but no explicit choice — start in system mode (no data-theme)
+}
+function applyTheme(t) {
+  theme = t;
+  document.documentElement.setAttribute('data-theme', t);
+  try { localStorage.setItem('camper-theme', t); } catch(e) {}
+}
+function toggleTheme() {
+  applyTheme(theme === 'dark' ? 'light' : 'dark');
+}
+// Apply saved preference on load
+try {
+  const saved = localStorage.getItem('camper-theme');
+  if (saved) applyTheme(saved);
+} catch(e) {}
+
+/* ─── Sticky nav shadow ─── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+/* ─── Mobile menu ─── */
+function toggleMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+document.querySelectorAll('.nav__links a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+
+/* ─── Smooth scroll ─── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      const offset = nav.offsetHeight + 8;
+      const y = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  });
+});
+
+/* ─── Reveal on scroll ─── */
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+/* ─── Lightbox ─── */
+const galleryImages = [
+  'img/hero.jpg', 'img/exterior-side.jpg', 'img/exterior-front.jpg',
+  'img/interior-home.jpg', 'img/kitchen-food.jpg', 'img/kitchen-view.jpg',
+  'img/interior-bed-sea.jpg', 'img/bed-night.jpg'
+];
+let lbIdx = 0;
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lightboxImg');
+
+function openLightbox(i) {
+  lbIdx = i;
+  lbImg.src = galleryImages[i];
+  lb.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(e) {
+  if (e && e.target !== lb && e.target !== document.querySelector('.lightbox__close')) return;
+  lb.classList.remove('active');
+  document.body.style.overflow = '';
+}
+function navLightbox(dir, e) {
+  e?.stopPropagation();
+  lbIdx = (lbIdx + dir + galleryImages.length) % galleryImages.length;
+  lbImg.src = galleryImages[lbIdx];
+}
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('active')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowRight') navLightbox(1);
+  if (e.key === 'ArrowLeft') navLightbox(-1);
+});
+</script>
